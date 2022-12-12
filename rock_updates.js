@@ -114,7 +114,7 @@ const rocksStatusCronJob = async () => {
 
     members.forEach((member) => {
       const rockFromMember = updatedRocks.find(
-        (rock) => rock.last_updated.by === member.id
+        (rock) => rock.assigned_to[0] === member.id
       );
 
       const rockCommentFromMember = updatedRockComments.find(
