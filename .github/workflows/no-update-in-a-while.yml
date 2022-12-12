@@ -20,9 +20,9 @@ jobs:
 
       - run: npm install
 
-      - name: Run remind-users-no-rocks-in-progress script
+      - name: Run remind-users-no-rocks-updated script
         shell: bash
-        run: npm run remind-users-no-rocks-in-progress
+        run: npm run remind-users-no-rocks-updated
         env:
           SMART_SUITE_TOKEN: ${{ secrets.SMART_SUITE_TOKEN }}
           SMART_SUITE_ACCOUNT_ID: ${{ secrets.SMART_SUITE_ACCOUNT_ID }}
