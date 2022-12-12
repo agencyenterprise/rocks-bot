@@ -1,0 +1,31 @@
+name: "Send message to users who haven't started any rock yet"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 16 * * *"
+
+jobs:
+  update-data:
+    name: "Send message to users who haven't started any rock yet"
+    runs-on: ubuntu-latest
+    environment: mysecrets
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - run: npm install
+
+      - name: Run remind-users-no-rocks-in-progress script
+        shell: bash
+        run: npm run remind-users-no-rocks-in-progress
+        env:
+          SMART_SUITE_TOKEN: ${{ secrets.SMART_SUITE_TOKEN }}
+          SMART_SUITE_ACCOUNT_ID: ${{ secrets.SMART_SUITE_ACCOUNT_ID }}
+          SLACK_USER_OAUTH_TOKEN: ${{ secrets.SLACK_USER_OAUTH_TOKEN }}
+          SLACK_BOT_OAUTH_TOKEN: ${{ secrets.SLACK_BOT_OAUTH_TOKEN }}
+          SEND_SLACK_MESASGE_URL: ${{ secrets.SEND_SLACK_MESASGE_URL }}
