@@ -8,7 +8,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "update-rocks-data": "node ./rock_updates.js",
-    "remind-users-no-rocks-in-progress": "node ./update_not_in_progress_rocks.js"
+    "remind-users-no-rocks-in-progress": "node ./update_not_in_progress_rocks.js",
+    "remind-users-no-rocks-updated": "node ./rocks_not_updated_in_ten_days.js"
   },
   "license": "MIT",
   "dependencies": {

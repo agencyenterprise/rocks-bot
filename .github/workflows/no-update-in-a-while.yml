@@ -1,4 +1,4 @@
-name: "Send message to users who haven't started any rock yet"
+name: "Send a message to users how have not updated their rocks in more than ten days"
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   update-data:
-    name: "Send message to users who haven't started any rock yet"
+    name: "Send a message to users how have not updated their rocks in more than ten days"
     runs-on: ubuntu-latest
     environment: mysecrets
     steps:
