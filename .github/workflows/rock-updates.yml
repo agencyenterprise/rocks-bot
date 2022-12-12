@@ -1,0 +1,30 @@
+name: "Update Rocks data"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 * * * *"
+
+jobs:
+  update-data:
+    name: "Update Rocks data"
+    runs-on: ubuntu-latest
+    environment: mysecrets
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - run: npm install
+
+      - name: Run update-rocks-data script
+        shell: bash
+        run: npm run update-rocks-data
+        env:
+          SMART_SUITE_TOKEN: ${{ secrets.SMART_SUITE_TOKEN }}
+          SMART_SUITE_ACCOUNT_ID: ${{ secrets.SMART_SUITE_ACCOUNT_ID }}
+          SLACK_USER_OAUTH_TOKEN: ${{ secrets.SLACK_USER_OAUTH_TOKEN }}
+          SLACK_BOT_OAUTH_TOKEN: ${{ secrets.SLACK_BOT_OAUTH_TOKEN }}

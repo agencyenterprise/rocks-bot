@@ -1,0 +1,17 @@
+{
+  "name": "rocks-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "repository": "git@github.com:randal923/rocks-bot.git",
+  "author": "randal923 <randal.andrade@hotmail.com>",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "update-rocks-data": "node ./rock_updates.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.2.1",
+    "dotenv": "^16.0.3"
+  }
+}
