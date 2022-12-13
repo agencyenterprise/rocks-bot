@@ -202,7 +202,7 @@ const rocksStatusCronJob = async () => {
     });
 
     logger("messages", messages);
-    //sendSlackMessage(messages.join("\n\n"));
+    sendSlackMessage(messages.join("\n\n"));
   } catch (error) {
     console.log(error.response);
   }
