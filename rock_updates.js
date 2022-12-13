@@ -124,20 +124,24 @@ const rocksStatusCronJob = async () => {
     const membersToBeNotified = [];
 
     members.forEach((member) => {
-      const rockFromMember = updatedRocks.find(
+      const rocksFromMember = updatedRocks.filter(
         (rock) => rock.assigned_to[0] === member.id
       );
 
-      const rockCommentFromMember = updatedRockComments.find(
+      const rocksCommentFromMember = updatedRockComments.filter(
         (rockWithComment) => rockWithComment.comment.member === member.id
       );
 
-      if (rockFromMember) {
-        membersToBeNotified.push({ ...member, rock: rockFromMember });
+      if (rocksFromMember.length > 0) {
+        rocksFromMember.forEach((rockFromMember) =>
+          membersToBeNotified.push({ ...member, rock: rockFromMember })
+        );
       }
 
-      if (rockCommentFromMember) {
-        membersToBeNotified.push({ ...member, rock: rockCommentFromMember });
+      if (rocksCommentFromMember.length > 0) {
+        rocksCommentFromMember.forEach((rockCommentFromMember) =>
+          membersToBeNotified.push({ ...member, rock: rockCommentFromMember })
+        );
       }
     });
 
