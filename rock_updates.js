@@ -74,8 +74,19 @@ const rocksStatusCronJob = async () => {
   };
 
   const getUpdatedRocks = async () => {
-    const rocksData = await axios.get(urls.GET_ROCKS_URL, smartSuiteConfig);
-    const rocks = rocksData.data.records;
+    const smartSuiteConfig = {
+      headers: {
+        Authorization: process.env.SMART_SUITE_TOKEN,
+        "Account-Id": process.env.SMART_SUITE_ACCOUNT_ID,
+      },
+    };
+
+    const rocksData = await axios.post(
+      urls.GET_ROCKS_URL,
+      {},
+      smartSuiteConfig
+    );
+    const rocks = rocksData.data.items;
     const fifteenMinutesAgo = getPreviousDateTime();
     const updatedRocks = [];
     const updatedRockComments = [];
@@ -191,7 +202,7 @@ const rocksStatusCronJob = async () => {
     });
 
     logger("messages", messages);
-    sendSlackMessage(messages.join("\n\n"));
+    //sendSlackMessage(messages.join("\n\n"));
   } catch (error) {
     console.log(error.response);
   }
