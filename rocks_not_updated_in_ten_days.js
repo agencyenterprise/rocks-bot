@@ -34,8 +34,8 @@ const getRockNotUpdatedInMoreThan10Days = async () => {
     },
   };
 
-  const rocksData = await axios.get(urls.GET_ROCKS_URL, smartSuiteConfig);
-  const rocks = rocksData.data.records;
+  const rocksData = await axios.post(urls.GET_ROCKS_URL, {}, smartSuiteConfig);
+  const rocks = rocksData.data.items;
   const currentDate = new Date();
   if (!rocks || rocks.length === 0) return;
 
