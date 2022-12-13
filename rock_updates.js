@@ -8,6 +8,12 @@ const logger = (message, item) => {
   return console.log(`LOGGING ${message} ---->`, item);
 };
 
+const rockStatuses = {
+  in_progress: "Not Started",
+  ready_for_review: "In Progress",
+  complete: "Complete",
+};
+
 const rockMessageTemplate = (
   userSlackId,
   rockTitle,
@@ -21,7 +27,7 @@ const rockMessageTemplate = (
     return `<@${userSlackId}> commented on <${rockUrl}|a rock> \n "${rockTitle}" \n\n ${rockComment}`;
   }
 
-  return `<@${userSlackId}> updated <${rockUrl}|a rock> status to *${status}* \n "${rockTitle}"`;
+  return `<@${userSlackId}> updated <${rockUrl}|a rock> status to *${rockStatuses[status]}* \n "${rockTitle}"`;
 };
 
 const sendSlackMessage = async (message) => {
