@@ -28,3 +28,9 @@ jobs:
           SMART_SUITE_ACCOUNT_ID: ${{ secrets.SMART_SUITE_ACCOUNT_ID }}
           SLACK_USER_OAUTH_TOKEN: ${{ secrets.SLACK_USER_OAUTH_TOKEN }}
           SLACK_BOT_OAUTH_TOKEN: ${{ secrets.SLACK_BOT_OAUTH_TOKEN }}
+          GET_SLACK_USERS: ${{ secrets.GET_SLACK_USERS }}
+          GET_ROCKS_URL: ${{ secrets.GET_ROCKS_URL }}
+          GET_MEMBERS_URL: ${{ secrets.GET_MEMBERS_URL }}
+          ROCKS_UPDATE_CHANNEL_URL: ${{ secrets.ROCKS_UPDATE_CHANNEL_URL }}
+          ROCKS_URL: ${{ secrets.ROCKS_URL }}
+          SEND_SLACK_MESASGE_URL: ${{ secrets.SEND_SLACK_MESASGE_URL }}
