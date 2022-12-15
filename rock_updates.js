@@ -1,8 +1,31 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 import axios from "axios";
+import { NodeHtmlMarkdown } from "node-html-markdown";
 
 const urls = process.env;
+
+export const parseHTMLtoSlackMarkdown = (html) => {
+  let markdown = NodeHtmlMarkdown.translate(html, {
+    strongDelimiter: "*",
+    bulletMarker: "•",
+  });
+
+  const linksRegex = /\[([^\[]+)\](\(.*\))/gm;
+  const matches = markdown.match(linksRegex);
+
+  matches?.forEach((match) => {
+    const link = match.replace(/ \"(.)+\"/, ""); // remove title
+    const [title, uri] = link.slice(1, -1).split("](");
+    if (!uri.startsWith("http://") || uri.startsWith("https://")) {
+      markdown = markdown.replace(match, `<https://${uri}|${title}>`);
+    } else {
+      markdown = markdown.replace(match, `<${uri}|${title}>`);
+    }
+  });
+
+  return markdown;
+};
 
 const logger = (message, item) => {
   return console.log(`LOGGING ${message} ---->`, item);
@@ -19,12 +42,14 @@ const rockMessageTemplate = (
   rockTitle,
   rockId,
   status,
-  rockComment
+  rockCommentHtml
 ) => {
   const rockUrl = `${process.env.ROCKS_URL}${rockId}`;
 
-  if (rockComment) {
-    return `<@${userSlackId}> commented on <${rockUrl}|a rock> \n "${rockTitle}" \n\n ${rockComment}`;
+  if (rockCommentHtml) {
+    return `<@${userSlackId}> commented on <${rockUrl}|a rock> \n "${rockTitle}" \n\n ${parseHTMLtoSlackMarkdown(
+      rockCommentHtml
+    )}`;
   }
 
   return `<@${userSlackId}> updated <${rockUrl}|a rock> status to *${rockStatuses[status]}* \n "${rockTitle}"`;
@@ -32,6 +57,7 @@ const rockMessageTemplate = (
 
 const sendSlackMessage = async (message) => {
   const slackViewConfig = {
+    parse: "full",
     headers: {
       Authorization: `Bearer ${process.env.SLACK_BOT_OAUTH_TOKEN}`,
     },
@@ -200,7 +226,7 @@ const rocksStatusCronJob = async () => {
       const rockTitle = member.rock.title;
       const rockId = member.rock.id;
       const status = member.rock.status.value;
-      const rockComment = member?.rock?.comment?.message?.preview;
+      const rockComment = member?.rock?.comment?.message?.html;
 
       return rockMessageTemplate(
         userSlackId,
