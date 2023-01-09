@@ -3,7 +3,7 @@ name: "Send a message to users how have not updated their rocks in more than ten
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 18 * * *"
+    - cron: "0 18 * * MON"
 
 jobs:
   update-data:

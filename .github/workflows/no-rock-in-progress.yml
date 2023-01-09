@@ -3,7 +3,7 @@ name: "Send message to users who haven't started any rock yet"
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 18 * * *"
+    - cron: "0 18 * * MON"
 
 jobs:
   update-data:
