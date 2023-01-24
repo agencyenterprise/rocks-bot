@@ -73,15 +73,20 @@ const sendSlackMessage = async (message) => {
 };
 
 const getSlackUsers = async () => {
-  const slackConfig = {
-    headers: {
-      Authorization: `Bearer ${process.env.SLACK_USER_OAUTH_TOKEN}`,
-    },
-  };
-  const userData = await axios.get(urls.GET_SLACK_USERS, slackConfig);
-  const users = userData.data.members;
+  try {
+    const slackConfig = {
+      headers: {
+        Authorization: `Bearer ${process.env.SLACK_USER_OAUTH_TOKEN}`,
+        "Accept-Encoding": "gzip,deflate,compress",
+      },
+    };
+    const userData = await axios.get(urls.GET_SLACK_USERS, slackConfig);
+    const users = userData.data.members;
 
-  return users;
+    return users;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const rocksStatusCronJob = async () => {
@@ -118,7 +123,7 @@ const rocksStatusCronJob = async () => {
       {},
       smartSuiteConfig
     );
-    logger("rocksData", rocksData);
+
     const rocks = rocksData.data.items;
     const fifteenMinutesAgo = getPreviousDateTime();
     const updatedRocks = [];
@@ -218,6 +223,7 @@ const rocksStatusCronJob = async () => {
 
     logger("membersToBeNotified", membersToBeNotified);
     const slackUsers = await getSlackUsers();
+    logger("slackUsers", slackUsers);
 
     const notifyMembers = getMembersAndSlackId(membersToBeNotified, slackUsers);
     logger("notifyMembers", notifyMembers);

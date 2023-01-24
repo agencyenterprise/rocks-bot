@@ -3,7 +3,7 @@ name: "Update Rocks data"
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/1 * * * *"
+    - cron: "*/15 * * * *"
 
 jobs:
   update-data:
