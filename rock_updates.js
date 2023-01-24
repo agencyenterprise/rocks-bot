@@ -118,6 +118,7 @@ const rocksStatusCronJob = async () => {
       {},
       smartSuiteConfig
     );
+    logger("rocksData", rocksData);
     const rocks = rocksData.data.items;
     const fifteenMinutesAgo = getPreviousDateTime();
     const updatedRocks = [];
